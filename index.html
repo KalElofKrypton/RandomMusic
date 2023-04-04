@@ -1,0 +1,19 @@
+<button>start</button>
+
+<script src="https://tonejs.github.io/build/Tone.js"></script>
+<script>
+  /* global Tone */
+  const notes = [
+    'A','B','C','D','E','F','G'
+  ]
+  
+  function play () {
+    const synth = new Tone.Synth().toDestination()
+    synth.triggerAttackRelease(notes[Math.round(Math.random()*6)]+(Math.round(Math.random()*8)).toString(), '8n')
+  
+  }
+
+	const button = document.querySelector('button')
+  button.addEventListener('click', play)
+  
+</script>
