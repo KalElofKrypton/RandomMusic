@@ -7,9 +7,13 @@
     'A','B','C','D','E','F','G'
   ]
   
+  const length = [
+    '16n', '8n', '4n', '2n', '1n'
+  ]
+  
   function play () {
     const synth = new Tone.Synth().toDestination()
-    synth.triggerAttackRelease(notes[Math.round(Math.random()*6)]+(Math.round(Math.random()*8)).toString(), '8n')
+    synth.triggerAttackRelease(notes[Math.round(Math.random()*6)]+(Math.round(Math.random()*8)).toString(), length[Math.round(Math.random()*4)])
   
   }
 
