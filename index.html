@@ -7,17 +7,16 @@
     'A','B','C','D','E','F','G'
   ]
   
-  
   function play () {
     const synth = new Tone.Synth().toDestination()
-    synth.triggerAttackRelease(notes[Math.round(Math.random()*6)]+(Math.round(Math.random()*4)).toString(), Math.round(Math.random()*16).toString()+'n')
+    synth.triggerAttackRelease(notes[Math.round(Math.random()*6)]+(Math.round(Math.random()*4)).toString(), ((Math.round(Math.random()*16)+1).toString()+'n'))
   
   }
 
   function start () {
     Tone.Transport.scheduleRepeat(play, '3n')
-    Tone.Transport.scheduleRepeat(play, '4n')
-    Tone.Transport.bpm.value = 100
+    Tone.Transport.scheduleRepeat(play, '2n')
+    Tone.Transport.bpm.value = 200
     Tone.Transport.start()
   }
 	const button = document.querySelector('button')
