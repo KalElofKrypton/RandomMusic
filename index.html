@@ -7,16 +7,61 @@
     'A','B','C','D','E','F','G'
   ]
   
+  let count = 0 
+  
+  function complement(s)
+    {
+        let comps = "";
+       
+        // finding the complement
+        // of the string.
+        for (let i = 0; i < s.length; i++)
+        {
+       
+            // if character is 0,
+            // append 1
+            if (s[i] === '0')
+                comps += '1';
+       
+            // if character is 1,
+            // append 0.
+            else
+                comps += '0';
+        }
+       
+        return comps;
+    }
+       
+    // Return the nth term
+    // of Thue-Morse sequence.
+    function nthTerm(n)
+    {
+        // Initializing the
+        // string to 0
+        let s = "0";
+       
+        // Running the loop
+        // for n - 1 time.
+        for (let i = 1; i < n; i++)
+       
+            // appending the complement of
+            // the string to the string.
+            s += complement(s);
+           	
+        count ++
+        return s;
+    }
+ 
+
   function play () {
     const synth = new Tone.Synth().toDestination()
-    synth.triggerAttackRelease(notes[Math.round(Math.random()*6)]+(Math.round(Math.random()*4)).toString(), ((Math.round(Math.random()*16)+1).toString()+'n'))
+    synth.triggerAttackRelease(notes[(nthTerm(count).replace(/[^1]/g, "").length)%6]+(Math.round(Math.random()*4)).toString(), ((Math.round(Math.random()*16)+1).toString()+'n'))
   
   }
 
   function start () {
     Tone.Transport.scheduleRepeat(play, '3n')
-    Tone.Transport.scheduleRepeat(play, '2n')
-    Tone.Transport.bpm.value = 200
+    Tone.Transport.bpm.value = 100
     Tone.Transport.start()
   }
 	const button = document.querySelector('button')
