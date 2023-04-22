@@ -1,33 +1,45 @@
-
+<p>Each row's leftmost letters is an octave, press shift to change to be flat notes!</p>
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
   /* global Tone */
   const notes = [
-    'A','B','C','D','E','F','G'
+    'C','D','E','F','G','A','B'
   ]
   
   const flat_notes = [
-    'Ab','Bb','Cb','Db','Eb','Fb','Gb'
+    'Cb','Db','Eb','Fb','Gb','Ab','Bb'
   ]
   
   ///(Math.round(Math.random()*16)+1).toString()+'n'
-  let count = 0 
+  //let count = 0 
+  let on = 0
   
-  function play () {
+  function play (e) {
     const synth = new Tone.Synth().toDestination()
-    if (count%2 === 0){
-      synth.triggerAttackRelease(flat_notes[Math.floor(Number(count)%1.5)]+(Math.round(Math.random()*4)).toString(), ('8n')
-		)
-      count+=1 
-    }
+    if (on===0) {
+    	if ('zxcvbnm'.indexOf(e) > -1){
+      	synth.triggerAttackRelease(notes['zxcvbnm'.indexOf(e)]+'3', ('8n'))
+      	}
+    	if ('asdfghj'.indexOf(e) > -1){
+      	synth.triggerAttackRelease(notes['asdfghj'.indexOf(e)]+'4', ('8n'))
+      	}
+    	if ('qwertyu'.indexOf(e) > -1){
+     	 synth.triggerAttackRelease(notes['qwertyu'.indexOf(e)]+'5', ('8n'))
+      	}
+    	}
     else {
-      synth.triggerAttackRelease(notes[Math.floor(Number(count)%1.5)]+(Math.round(Math.random()*4)).toString(), ('8n')
-		)
-      count+=1 
+      if ('zxcvbnm'.indexOf(e) > -1){
+      	synth.triggerAttackRelease(flat_notes['zxcvbnm'.indexOf(e)]+'3', ('8n'))
+      	}
+    	if ('asdfghj'.indexOf(e) > -1){
+      	synth.triggerAttackRelease(flat_notes['asdfghj'.indexOf(e)]+'4', ('8n'))
+      	}
+    	if ('qwertyu'.indexOf(e) > -1){
+     	 synth.triggerAttackRelease(flat_notes['qwertyu'.indexOf(e)]+'5', ('8n'))
+      	}
+    	}
     }
-  }
 
-  //let on = 0
   
 //  function start () {
   
@@ -37,8 +49,17 @@
    // }
   
   document.addEventListener("keydown", (event) => { 
-    console.log(event.key.charCodeAt(0)-97)
-    play()
+    if(event.shiftKey === true) {
+      if (on===0) {
+        on += 1
+      	console.log(on)
+      }
+      else {
+        on = 0
+        console.log(on)
+      }
+    }
+    play(event.key)
     return;
   // do something
 });
