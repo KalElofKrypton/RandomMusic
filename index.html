@@ -1,3 +1,4 @@
+<button type="button" id="btn">CLICK TO RECORD</button>
 <p>Each row's leftmost letters is an octave, press shift to change to be flat notes!</p>
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
@@ -47,6 +48,20 @@
     //Tone.Transport.bpm.value = 250
     //Tone.Transport.start()
    // }
+  let notes_played = ''
+  let should_record = false
+  
+  function record () {
+    if (should_record === false) {
+      should_record = true
+    }
+    else {
+      should_record = false
+    }
+  }
+  
+  let btn = document.quertSelector("btn")
+  btn.addEventListener('click',record)
   
   document.addEventListener("keydown", (event) => { 
     if(event.shiftKey === true) {
@@ -60,6 +75,9 @@
       }
     }
     play(event.key)
+    if (should_record === true){
+      notes_played += event.key
+    }
     return;
   // do something
 });
