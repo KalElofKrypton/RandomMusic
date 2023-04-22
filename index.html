@@ -52,6 +52,7 @@
    // }
   let notes_played = ''
   let time_played = []
+  let time_played_difference = []
   let should_record = false
   
   function record () {
@@ -83,18 +84,21 @@
       notes_played += event.key
       time_played.push(Tone.now())
     }
-    return;
+    return
 	
 })
 
-let time_played_difference = []
-
-for (let j = 0; j < time_played.length-1; j++){
-  time_played_difference.push(time_played[j+1]-time_played[j])
-}
-
 function playback() {
-  const now = Tone.now()
+  for (let j = 0; j < time_played.length; j++){
+    if (j===0){
+      time_played_difference.push(0)
+    }
+    else {
+      time_played_difference.push(time_played[j]-time_played[j-1]+time_played_difference[j-1])
+    }
+  	//console.log(time_played_difference)
+	}
+  let now = Tone.now()
   for (let i = 0; i<notes_played.length; i++){
 			const synth = new Tone.Synth().toDestination()
     	if ('zxcvbnm'.indexOf(notes_played[i]) > -1){
