@@ -91,8 +91,10 @@
     return
 	
 })
+let playback_on = false
 let flat = false
 function playback() {
+  playback_on = true
   if (time_played_difference !== []) {
     time_played_difference = []
   }
@@ -106,6 +108,7 @@ function playback() {
   	//console.log(time_played_difference)
 	}
   time_played = []
+  while (playback_on === true){
   let now = Tone.now()
   for (let i = 0; i<notes_played.length; i++){
 			const synth = new Tone.Synth().toDestination()
@@ -138,7 +141,7 @@ function playback() {
     	}
   	notes_played = ''
   }
-
+}
 
 const playing = document.querySelector("#playback")
 playing.addEventListener('click', playback)
