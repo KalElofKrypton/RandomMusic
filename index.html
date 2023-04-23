@@ -88,12 +88,14 @@
         notes_played += 'S'
       	time_played.push(Tone.now())
       }
+      console.log(time_played)
     }
     return
 	
 })
 
-  let flat = false
+let flat = false
+
 function playback() {
   for (let j = 0; j < time_played.length; j++){
     if (j===0){
@@ -104,8 +106,9 @@ function playback() {
     }
   	//console.log(time_played_difference)
 	}
+  
   time_played = []
-
+  
   let now = Tone.now()
   for (let i = 0; i<notes_played.length; i++){
 			const synth = new Tone.Synth().toDestination()
