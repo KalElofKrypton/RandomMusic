@@ -72,22 +72,26 @@
     if(event.shiftKey === true) {
       if (on===0) {
         on += 1
-      	console.log(on)
       }
       else {
         on = 0
-        console.log(on)
       }
     }
     play(event.key)
     if (should_record === true){
-      notes_played += event.key
-      time_played.push(Tone.now())
+      if (event.key !== 'Shift'){
+        notes_played += event.key
+      	time_played.push(Tone.now())
+      }
+      else {
+        notes_played += 'S'
+      	time_played.push(Tone.now())
+      }
     }
     return
 	
 })
-
+let flat = false
 function playback() {
   if (time_played_difference !== []) {
     time_played_difference = []
@@ -105,15 +109,32 @@ function playback() {
   let now = Tone.now()
   for (let i = 0; i<notes_played.length; i++){
 			const synth = new Tone.Synth().toDestination()
-    	if ('zxcvbnm'.indexOf(notes_played[i]) > -1){
-      	synth.triggerAttackRelease(notes['zxcvbnm'.indexOf(notes_played[i])]+'3', ('8n'),now+time_played_difference[i])
+      if (flat === true){
+        if ('zxcvbnm'.indexOf(notes_played[i]) > -1){
+      		synth.triggerAttackRelease(flat_notes['zxcvbnm'.indexOf(notes_played[i])]+'3', ('8n'),now+time_played_difference[i])
       	}
-    	if ('asdfghj'.indexOf(notes_played[i]) > -1){
-     		synth.triggerAttackRelease(notes['asdfghj'.indexOf(notes_played[i])]+'4', ('8n'),now+time_played_difference[i])
+    		if ('asdfghj'.indexOf(notes_played[i]) > -1){
+     			synth.triggerAttackRelease(flat_notes['asdfghj'.indexOf(notes_played[i])]+'4', ('8n'),now+time_played_difference[i])
       	}
-    	if ('qwertyu'.indexOf(notes_played[i]) > -1){
-     		synth.triggerAttackRelease(notes['qwertyu'.indexOf(notes_played[i])]+'5', ('8n'),now+time_played_difference[i])
+    		if ('qwertyu'.indexOf(notes_played[i]) > -1){
+     			synth.triggerAttackRelease(flat_notes['qwertyu'.indexOf(notes_played[i])]+'5', ('8n'),now+time_played_difference[i])
       	}
+    		if (notes_played[i] === 'S')
+        	flat = false
+      }
+    	else{
+        if ('zxcvbnm'.indexOf(notes_played[i]) > -1){
+      	  synth.triggerAttackRelease(notes['zxcvbnm'.indexOf(notes_played[i])]+'3', ('8n'),now+time_played_difference[i])
+      	}
+    	  if ('asdfghj'.indexOf(notes_played[i]) > -1){
+     		  synth.triggerAttackRelease(notes['asdfghj'.indexOf(notes_played[i])]+'4', ('8n'),now+time_played_difference[i])
+      	}
+    	  if ('qwertyu'.indexOf(notes_played[i]) > -1){
+     		  synth.triggerAttackRelease(notes['qwertyu'.indexOf(notes_played[i])]+'5', ('8n'),now+time_played_difference[i])
+      	}
+    		if (notes_played[i] === 'S')
+        	flat = true
+    	}
     	}
   	notes_played = ''
   }
