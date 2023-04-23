@@ -1,5 +1,6 @@
 <button type="button" id="btn">CLICK TO RECORD</button>
 <button type="button" id="playback">CLICK TO PLAYBACK</button>
+<button type="button" id="erase">CLICK TO ERASE</button>
 
 <p>Each row's leftmost letters is an octave, press shift to change to be flat notes!</p>
 <script src="https://tonejs.github.io/build/Tone.js"></script>
@@ -94,9 +95,6 @@
 
   let flat = false
 function playback() {
-  if (time_played_difference !== []) {
-    time_played_difference = []
-  }
   for (let j = 0; j < time_played.length; j++){
     if (j===0){
       time_played_difference.push(0)
@@ -138,10 +136,16 @@ function playback() {
         	flat = true
     	}
     	}
-  	notes_played = ''
 }
 
+function erase(){
+  notes_played = ''
+  time_played_difference = []
+}
 const playing = document.querySelector("#playback")
 playing.addEventListener('click', playback)
+  
+const erasing = document.querySelector("#erase")
+erasing.addEventListener('click', erase)
   
 </script>
