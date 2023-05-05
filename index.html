@@ -1,6 +1,14 @@
 <button type="button" id="btn">CLICK TO RECORD</button>
 <button type="button" id="playback">CLICK TO PLAYBACK</button>
 <button type="button" id="erase">CLICK TO ERASE</button>
+<select name="sounds" id="sounds">
+  <option value="synth">Synth</option>
+  <option value="monosynth">MonoSynth</option>
+  <option value="fmsynth">FMSynth</option>
+  <option value="amsynth">AMSynth</option>
+  <option value="polysynth">PolySynth</option>
+  <option value="metal">MetalSynth</option>
+</select>
 
 <p>Each row's leftmost letters is an octave, press shift to change to be flat notes!</p>
 <script src="https://tonejs.github.io/build/Tone.js"></script>
@@ -17,9 +25,29 @@
   ///(Math.round(Math.random()*16)+1).toString()+'n'
   //let count = 0 
   let on = 0
-  
+
   function play (e) {
-    const synth = new Tone.Synth().toDestination()
+    let synth = 0 
+    let synthesizer = document.querySelector("#sounds")
+    if (synthesizer.value === "synth") {
+      synth = new Tone.Synth().toDestination()
+    }
+    else if (synthesizer.value === "monosynth"){
+      synth = new Tone.MonoSynth().toDestination()
+    }
+    else if (synthesizer.value === "fmsynth"){
+      synth = new Tone.FMSynth().toDestination()      
+    }
+    else if (synthesizer.value === "amsynth"){
+      synth = new Tone.AMSynth().toDestination()            
+    }
+    else if (synthesizer.value === "polysynth"){
+       synth = new Tone.PolySynth().toDestination()                 
+    }
+    else if (synthesizer.value === "metal"){
+      synth = new Tone.MetalSynth().toDestination()                     
+    }
+    
     let z_index = 'zxcvbnm'.indexOf(e)
     let a_index = 'asdfghj'.indexOf(e)
     let q_index = 'qwertyu'.indexOf(e)
@@ -156,10 +184,13 @@ function erase(){
   notes_played = ''
   time_played_difference = []
 }
+
 const playing = document.querySelector("#playback")
 playing.addEventListener('click', playback)
   
 const erasing = document.querySelector("#erase")
 erasing.addEventListener('click', erase)
+  
+
   
 </script>
