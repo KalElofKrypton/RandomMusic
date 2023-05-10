@@ -11,6 +11,10 @@
   <option value="duo">DuoSynth</option>
   <option value="pluck">PluckSynth</option>
 </select>
+<div class="slidecontainer">
+  <input type="range" min="1" max="100" value="50" class="slider" id="repeatsPlayback">
+  <output id="output"></output>
+</div>
 
 <p>Each row's leftmost letters is an octave, press shift to change to be flat notes!</p>
 <script src="https://tonejs.github.io/build/Tone.js"></script>
@@ -28,7 +32,7 @@
   //let count = 0 
   let on = 0
 	let synthesizer = document.querySelector("#sounds")
-
+  
   function play (e) {
     let synth = 0 
     synthesizer = document.querySelector("#sounds")
@@ -98,6 +102,8 @@
   let should_record = false
   let flat = false
   
+  let repeats_slider = 0 
+  
   function record () {
     if (should_record === false) {
       should_record = true
@@ -152,7 +158,7 @@ function playback() {
   
   
   let now = Tone.now()
-  for (let k = 0; k<1; k++){
+  for (let k = 0; k<repeats_slider; k++){
 
   	for (let i = 0; i<notes_played.length; i++){
       let synth = 0
@@ -226,7 +232,12 @@ playing.addEventListener('click', playback)
   
 const erasing = document.querySelector("#erase")
 erasing.addEventListener('click', erase)
-  
 
+const repeats = document.querySelector("#repeatsPlayback")
+function slider_change() {
+    repeats_slider = repeats.value
+  	document.getElementById('output').innerHTML = repeats_slider
+  }
+repeats.addEventListener('change', slider_change)
   
 </script>
