@@ -8,6 +8,8 @@
   <option value="amsynth">AMSynth</option>
   <option value="polysynth">PolySynth</option>
   <option value="metal">MetalSynth</option>
+  <option value="duo">DuoSynth</option>
+  <option value="pluck">PluckSynth</option>
 </select>
 
 <p>Each row's leftmost letters is an octave, press shift to change to be flat notes!</p>
@@ -25,10 +27,11 @@
   ///(Math.round(Math.random()*16)+1).toString()+'n'
   //let count = 0 
   let on = 0
+	let synthesizer = document.querySelector("#sounds")
 
   function play (e) {
     let synth = 0 
-    let synthesizer = document.querySelector("#sounds")
+    synthesizer = document.querySelector("#sounds")
     if (synthesizer.value === "synth") {
       synth = new Tone.Synth().toDestination()
     }
@@ -46,6 +49,12 @@
     }
     else if (synthesizer.value === "metal"){
       synth = new Tone.MetalSynth().toDestination()                     
+    }
+    else if (synthesizer.value === "duo"){
+      synth = new Tone.DuoSynth().toDestination()                     
+    }
+    else if (synthesizer.value === "pluck"){
+      synth = new Tone.PluckSynth({attackNoise:20}).toDestination()                     
     }
     
     let z_index = 'zxcvbnm'.indexOf(e)
@@ -83,6 +92,7 @@
     //Tone.Transport.start()
    // }
   let notes_played = ''
+  let instrument_record = []
   let time_played = []
   let time_played_difference = []
   let should_record = false
@@ -115,6 +125,7 @@
       if (event.key !== 'Shift'){
         notes_played += event.key
       	time_played.push(Tone.now())
+        instrument_record.push(synthesizer.value)
       }
       else {
         notes_played += 'S'
@@ -141,10 +152,34 @@ function playback() {
   
   
   let now = Tone.now()
-  for (let k = 0; k<20; k++){
+  for (let k = 0; k<1; k++){
 
   	for (let i = 0; i<notes_played.length; i++){
-				const synth = new Tone.Synth().toDestination()
+      let synth = 0
+			if (instrument_record[i] === "synth") {
+    		synth = new Tone.Synth().toDestination()
+     }
+      else if (instrument_record[i] === "monosynth"){
+       	synth = new Tone.MonoSynth().toDestination()
+    }
+     	else if (instrument_record[i] === "fmsynth"){
+       	synth = new Tone.FMSynth().toDestination()      
+    }
+    	else if (instrument_record[i] === "amsynth"){
+      	synth = new Tone.AMSynth().toDestination()            
+    }
+    	else if (instrument_record[i] === "polysynth"){
+       	synth = new Tone.PolySynth().toDestination()                 
+    }
+    	else if (instrument_record[i] === "metal"){
+      	synth = new Tone.MetalSynth().toDestination()                     
+    }
+    	else if (instrument_record[i] === "duo"){
+      	synth = new Tone.DuoSynth().toDestination()                     
+    }
+    	else if (instrument_record[i] === "pluck"){
+      	synth = new Tone.PluckSynth({attackNoise:20}).toDestination()                     
+    }
       
       	let z_index = 'zxcvbnm'.indexOf(notes_played[i])
     		let a_index = 'asdfghj'.indexOf(notes_played[i])
@@ -183,6 +218,7 @@ function playback() {
 function erase(){
   notes_played = ''
   time_played_difference = []
+  instrument_record = []
 }
 
 const playing = document.querySelector("#playback")
