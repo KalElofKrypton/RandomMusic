@@ -1,6 +1,7 @@
 <button type="button" id="btn">CLICK TO RECORD</button>
-<button type="button" id="playback">CLICK TO PLAYBACK</button>
+<button type="button" id="playback" data-state="a">CLICK TO PLAYBACK</button>
 <button type="button" id="erase">CLICK TO ERASE</button>
+
 <select name="sounds" id="sounds">
   <option value="synth">Synth</option>
   <option value="monosynth">MonoSynth</option>
@@ -11,12 +12,14 @@
   <option value="duo">DuoSynth</option>
   <option value="pluck">PluckSynth</option>
 </select>
+
 <div class="slidecontainer">
   <input type="range" min="1" max="100" value="50" class="slider" id="repeatsPlayback">
   <output id="output"></output>
 </div>
 
-<p>Each row's leftmost letters is an octave, press shift to change to be flat notes! There are various noises you can make, and be sure to choose an amount of loops prior to playing!</p>
+<p>Each row's leftmost letters is an octave. Q-U on the keyboard is the highest octave, A-J is the middle octave, and Z-M is the lowest octave.
+  Press shift to change to be flat notes! There are various noises you can make, and be sure to choose an amount of loops prior to playing!</p>
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
   /* global Tone */
@@ -107,16 +110,20 @@
   function record () {
     if (should_record === false) {
       should_record = true
+      document.querySelector("#btn").innerText = "CLICK TO STOP RECORD"
     }
     else {
       should_record = false
+      document.querySelector("#btn").innerText = "CLICK TO RECORD"
     }
     // console.log(should_record)
   }
+
   
   const btn = document.querySelector("#btn")
-  btn.addEventListener('click', record)
   
+  btn.addEventListener('click', record)
+
   document.addEventListener("keydown", (event) => { 
     if(event.shiftKey === true) {
       if (on===0) {
